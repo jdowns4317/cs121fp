@@ -1,7 +1,10 @@
 """
-TODO: Student name(s):
-TODO: Student email(s):
-TODO: High-level program overview
+Thorsen Kristufek and James Downs
+tkristuf@caltech.edu, jdowns@caltech.edu
+-- Our application will have information about colleges and universities
+-- so that prospective college students can easily find institutions that meet
+-- their desired criteria. Colleges will also be able to interact with the
+-- database to keep their information updated.
 
 ******************************************************************************
 This is a template you may start with for your Final Project application.
@@ -111,7 +114,6 @@ def example_query():
 # ----------------------------------------------------------------------
 # Command-Line Functionality
 # ----------------------------------------------------------------------
-# TODO: Please change these!
 def show_options():
     """
     Displays options users can choose in the application, such as
@@ -119,11 +121,12 @@ def show_options():
     sending a request to do <x>, etc.
     """
     print('What would you like to do? ')
-    print('  (TODO: provide command-line options)')
-    print('  (x) - something nifty to do')
-    print('  (x) - another nifty thing')
-    print('  (x) - yet another nifty thing')
-    print('  (x) - more nifty things!')
+    print('  (x) - Top 10 Colleges Ranked by Lowest Admission Rate')
+    print("  (y) - Men's Only Colleges")
+    print("  (z) - Women's Only Colleges")
+    print('  (k) - Colleges with Sports programs in (input) Acceptance Rate:')
+    print('  (j) - City Population Range (input):')
+    print('  (i) - Detailed Sports Info by College (input)')
     print('  (q) - quit')
     print()
     ans = input('Enter an option: ').lower()
@@ -131,30 +134,46 @@ def show_options():
         quit_ui()
     elif ans == '':
         pass
-
-
-# Another example of where we allow you to choose to support admin vs. 
-# client features  in the same program, or
-# separate the two as different app_client.py and app_admin.py programs 
-# using the same database.
-def show_admin_options():
+    
+def low_admission_rate_colleges():
     """
-    Displays options specific for admins, such as adding new data <x>,
-    modifying <x> based on a given id, removing <x>, etc.
+    Outputs the 10 Colleges/Universities with
+    Lowest Admission Rate
     """
-    print('What would you like to do? ')
-    print('  (x) - something nifty for admins to do')
-    print('  (x) - another nifty thing')
-    print('  (x) - yet another nifty thing')
-    print('  (x) - more nifty things!')
-    print('  (q) - quit')
-    print()
-    ans = input('Enter an option: ').lower()
-    if ans == 'q':
-        quit_ui()
-    elif ans == '':
-        pass
+    pass
 
+def mens_only_colleges():
+    """
+    Outputs Men's only colleges
+    """
+    pass
+
+def womens_only_colleges():
+    """
+    Outputs women's only colleges
+    """
+    pass
+
+def colleges_with_sports_in_acceptance():
+    """
+    Colleges with Sports programs in a user
+    input Acceptance Rate range
+    """
+    pass
+
+def colleges_within_pop():
+    """
+    Outputs colleges within a 
+    user input population range
+    """
+    pass
+
+def detailed_sports_info():
+    """
+    Outputs detailed sports infor 
+    about a user input college
+    """
+    pass
 
 def quit_ui():
     """
