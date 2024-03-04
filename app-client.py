@@ -132,9 +132,19 @@ def show_options():
     ans = input('Enter an option: ').lower()
     if ans == 'q':
         quit_ui()
-    elif ans == '':
-        pass
-    
+    elif ans == 'x':
+        low_admission_rate_colleges()
+    elif ans == 'y':
+        mens_only_colleges()
+    elif ans == 'z':
+        womens_only_colleges()
+    elif ans == 'k':  
+        colleges_with_sports_in_acceptance()
+    elif ans == 'j':
+        colleges_within_pop()
+    elif ans == 'i': 
+        detailed_sports_info()
+
 def low_admission_rate_colleges():
     """
     Outputs the 10 Colleges/Universities with

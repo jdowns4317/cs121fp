@@ -143,18 +143,47 @@ def show_admin_options():
     modifying <x> based on a given id, removing <x>, etc.
     """
     print('What would you like to do? ')
-    print('  (x) - something nifty for admins to do')
-    print('  (x) - another nifty thing')
-    print('  (x) - yet another nifty thing')
-    print('  (x) - more nifty things!')
+    print('  (p) - Add/Update College Mission')
+    print('  (e) - Update Tuition Costs')
+    print('  (a) - Update Admission Rate')
+    print('  (v) - Update Sports info')
     print('  (q) - quit')
     print()
     ans = input('Enter an option: ').lower()
     if ans == 'q':
         quit_ui()
-    elif ans == '':
-        pass
+    elif ans == 'p':
+        update_college_mission()
+    elif ans == 'e':
+        update_tuition_cost()
+    elif ans == 'a':
+        update_admission_rate()
+    elif ans == 'v':
+        update_sports_info()
 
+def update_college_mission():
+    """
+    Update College Mission Statements
+    """
+    pass
+
+def update_tuition_cost():
+    """
+    Update College Mission Statements
+    """
+    pass
+
+def update_admission_rate():
+    """
+    Update College Mission Statements
+    """
+    pass
+
+def update_sports_info():
+    """
+    Update College Mission Statements
+    """
+    pass
 
 def quit_ui():
     """
