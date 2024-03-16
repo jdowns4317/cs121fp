@@ -99,3 +99,6 @@ CREATE TABLE city_pop (
 
 CREATE INDEX idx_name ON basic_college_info(college_name);
 CREATE INDEX idx_city_state on city_pop(city, state_abbr);
+-- allow for local data loading
+SET GLOBAL local_infile=1;
+SET GLOABL OPT_LOCAL_INFILE=1;

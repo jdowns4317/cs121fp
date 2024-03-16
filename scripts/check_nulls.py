@@ -1,9 +1,9 @@
 import pandas as pd
 
-csv_file_path = 'data/raw_college_data.csv'
+csv_file_path = 'processed_data/cost.csv'
 df = pd.read_csv(csv_file_path)
 
-column = 'ADM_RATE'
+column = 'tuition'
 has_nulls = df[column].isnull()
 
 # Print out num of null values
