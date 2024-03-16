@@ -7,10 +7,11 @@
 -- database to keep their information updated.
 
 -- clean up old tables
+DROP TABLE IF EXISTS cost;
+DROP TABLE IF EXISTS sports_programs;
+DROP TABLE IF EXISTS sports_grad_rate;
+DROP TABLE IF EXISTS city_pop;
 DROP TABLE IF EXISTS basic_college_info;
-DROP TABLE IF EXISTS acceptance_info;
-DROP TABLE IF EXISTS academic_info;
-DROP TABLE IF EXISTS athletic_info;
 
 -- Table representing the basic information about each college in the USA
 -- Each college is uniquely identified by the 
@@ -75,7 +76,7 @@ CREATE TABLE sports_programs (
     sport   CHAR(3) NOT NULL,
 
     FOREIGN KEY (u_id) REFERENCES basic_college_info(u_id)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
 );
 
 -- Table representing the graduation rate corresponding to the D1
@@ -93,7 +94,7 @@ CREATE TABLE city_pop (
     state_abbr      CHAR(2) NOT NULL,
     population      INT,
 
-    PRIMARY KEY (city, state)
+    PRIMARY KEY (city, state_abbr)
 );
 
 CREATE INDEX idx_name ON basic_college_info(college_name);
