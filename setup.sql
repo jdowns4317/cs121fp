@@ -1,6 +1,6 @@
 -- CS 121 Final Project
 -- James Downs (jdowns@caltech.edu), Thorsen Kristufek (tkristuf@caltech.edu)
--- Setup file for our educational database.
+-- Setup file for our higher education database.
 -- Our application will have information about colleges and universities
 -- so that prospective college students can easily find institutions that meet
 -- their desired criteria. Colleges will also be able to interact with the
@@ -18,13 +18,13 @@ DROP TABLE IF EXISTS athletic_info;
 -- The population may be null (missing), but the rest of the traits cannot be
 CREATE TABLE basic_college_info (
     u_id            INT PRIMARY KEY,
-    name            VARCHAR(100) NOT NULL,
+    college_name    VARCHAR(100) NOT NULL,
     -- total undergrad enrollment
     ug_pop          INT,
     -- Campus location city
     city            VARCHAR(25) NOT NULL,
     -- Campus state (abbreviation)
-    state           CHAR(2) NOT NULL,
+    state_abbr      CHAR(2) NOT NULL,
     -- Binary HBCU Flag
     hbcu            TINYINT DEFAULT 0 NOT NULL,
     -- Binary Men Only Flag
@@ -44,6 +44,9 @@ CREATE TABLE basic_college_info (
 );
 
 -- Table representing the cost of attending colleges
+-- Represented seperately to allow further functionality for many types of
+-- prices such as in-district, on-scholarship, etc.
+-- These prices could simply be distinguished by adding more flags.
 -- No entries may be null
 CREATE TABLE cost (
     u_id    INT PRIMARY KEY,
@@ -87,10 +90,11 @@ CREATE TABLE sports_grad_rate (
 CREATE TABLE city_pop (
     city            VARCHAR(25) NOT NULL,
     -- state abbreviation
-    state           CHAR(2) NOT NULL,
+    state_abbr      CHAR(2) NOT NULL,
     population      INT,
 
     PRIMARY KEY (city, state)
 );
 
-CREATE INDEX idx_name ON basic_college_info (name);
+CREATE INDEX idx_name ON basic_college_info(college_name);
+CREATE INDEX idx_city_state on city_pop(city, state_abbr);
