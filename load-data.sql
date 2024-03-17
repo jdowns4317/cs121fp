@@ -17,7 +17,8 @@ INTO TABLE cost
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(u_id, tuition, in_state);
 
 -- sports_programs table data
 LOAD DATA LOCAL INFILE 'processed_data/sport_programs.csv' 
@@ -36,8 +37,8 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 -- city_pop table data
-LOAD DATA LOCAL INFILE 'processed_data/cost.csv' 
-INTO TABLE cost 
+LOAD DATA LOCAL INFILE 'processed_data/population.csv' 
+INTO TABLE city_pop  
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'

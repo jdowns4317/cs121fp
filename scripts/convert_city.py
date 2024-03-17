@@ -66,7 +66,8 @@ for i, row in df.iterrows():
     city = loc_split[0]
     state = loc_split[-1]
     state = state.strip()
-    city = city.split()[:-1]
+    if len(city.split()) > 1:
+        city = city.split()[:-1]
     city = " ".join(city)
     new_rows.append({'city': city, 'state_abbr': state_abbreviations[state], 'population': row['Population']})
 
