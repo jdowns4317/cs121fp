@@ -21,13 +21,13 @@ DELIMITER ;
 
 -- Procedure for admins to update the information about their school
 DELIMITER !
-CREATE PROCEDURE update_admission_rate(new_u_id INT, 
-                                       new_ug_pop INT,
-                                       new_hbcu TINYINT,
-                                       new_men_only TINYINT,
-                                       new_women_only TINYINT,
-                                       new_highest_degree TINYINT,
-                                       new_admission_rate DECIMAL(6,5))
+CREATE PROCEDURE update_all_info(new_u_id INT, 
+                                new_ug_pop INT,
+                                new_hbcu TINYINT,
+                                new_men_only TINYINT,
+                                new_women_only TINYINT,
+                                new_highest_degree TINYINT,
+                                new_admission_rate DECIMAL(6,5))
 BEGIN 
     UPDATE basic_college_info 
     SET ug_pop = new_ug_pop, hbcu = new_hbcu, men_only = new_men_only,

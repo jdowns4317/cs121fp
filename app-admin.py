@@ -1,29 +1,13 @@
 """
-TODO: Student name(s):
-TODO: Student email(s):
-TODO: High-level program overview
+Thorsen Kristufek and James Downs
+tkristuf@caltech.edu, jdowns@caltech.edu
+-- Our application will have information about colleges and universities
+-- so that prospective college students can easily find institutions that meet
+-- their desired criteria. Colleges will also be able to interact with the
+-- database to keep their information updated.
 
-******************************************************************************
-This is a template you may start with for your Final Project application.
-You may choose to modify it, or you may start with the example function
-stubs (most of which are incomplete).
-
-Some sections are provided as recommended program breakdowns, but are optional
-to keep, and you will probably want to extend them based on your application's
-features.
-
-TODO:
-- Make a copy of app-template.py to a more appropriately named file. You can
-  either use app.py or separate a client vs. admin interface with app_client.py,
-  app_admin.py (you can factor out shared code in a third file, which is
-  recommended based on submissions in 22wi).
-- For full credit, remove any irrelevant comments, which are included in the
-  template to help you get started. Replace this program overview with a
-  brief overview of your application as well (including your name/partners name).
-  This includes replacing everything in this *** section!
-******************************************************************************
+This file specifies the admin user interface.
 """
-# TODO: Make sure you have these installed with pip3 if needed
 import sys  # to print error messages to sys.stderr
 import mysql.connector
 # To get error codes from the connector, useful for user-friendly
@@ -32,8 +16,7 @@ import mysql.connector.errorcode as errorcode
 
 # Debugging flag to print errors when debugging that shouldn't be visible
 # to an actual client. ***Set to False when done testing.***
-DEBUG = True
-
+DEBUG = False
 
 # ----------------------------------------------------------------------
 # SQL Utility Functions
@@ -46,12 +29,12 @@ def get_conn():
     try:
         conn = mysql.connector.connect(
           host='localhost',
-          user='appadmin',
+          user='eduadmin',
           # Find port in MAMP or MySQL Workbench GUI or with
           # SHOW VARIABLES WHERE variable_name LIKE 'port';
           port='3306',  # this may change!
           password='adminpw',
-          database='shelterdb' # replace this with your database name
+          database='finaldb' # replace this with your database name
         )
         print('Successfully connected.')
         return conn
@@ -71,119 +54,112 @@ def get_conn():
             sys.stderr('An error occurred, please contact the administrator.')
         sys.exit(1)
 
+
 # ----------------------------------------------------------------------
-# Functions for Command-Line Options/Query Execution
+# Command-Line Functionality
 # ----------------------------------------------------------------------
-def example_query():
-    param1 = ''
-    cursor = conn.cursor()
-    # Remember to pass arguments as a tuple like so to prevent SQL
-    # injection.
-    sql = 'SELECT col1 FROM table WHERE col2 = \'%s\';' % (param1, )
+
+def show_admin_options():
+    """
+    Displays options specific for admins, such as adding new data <x>,
+    modifying <x> based on a given id, removing <x>, etc.
+    """
+    while True:
+        print('What would you like to do? ')
+        print('  (p) - Add/Update College Mission')
+        print('  (e) - Update All Information')
+        print('  (a) - Update Admission Rate')
+        print('  (q) - quit')
+        print()
+        ans = input('Enter an option: ').lower()
+        if ans == 'q':
+            quit_ui()
+        elif ans == 'p':
+            update_college_mission()
+        elif ans == 'e':
+            update_all_info()
+        elif ans == 'a':
+            update_admission_rate()
+
+def update_college_mission():
+    """
+    Update College Mission Statements
+    """
+    u_id = input("Please give the u_id of your college: ")
+    while True:
+        mission = input("Please give the mission of your colllege (< 500 characters): ")
+        if len(mission) < 500:
+            break
+    
+    sql = """
+UPDATE basic_college_info
+SET mission = '%s'
+WHERE u_id = '%s'
+""" % (mission, u_id)
     try:
+        cursor = conn.cursor()
         cursor.execute(sql)
-        # row = cursor.fetchone()
         rows = cursor.fetchall()
-        for row in rows:
-            (col1val) = (row) # tuple unpacking!
-            # do stuff with row data
+        print(f"Updated the mission for {u_id}")
     except mysql.connector.Error as err:
         # If you're testing, it's helpful to see more details printed.
         if DEBUG:
             sys.stderr(err)
             sys.exit(1)
         else:
-            # TODO: Please actually replace this :) 
-            sys.stderr('An error occurred, give something useful for clients...')
+            sys.stderr('An SQL error occurred, please retry')
 
-
-
-# ----------------------------------------------------------------------
-# Functions for Logging Users In
-# ----------------------------------------------------------------------
-# Note: There's a distinction between database users (admin and client)
-# and application users (e.g. members registered to a store). You can
-# choose how to implement these depending on whether you have app.py or
-# app-client.py vs. app-admin.py (in which case you don't need to
-# support any prompt functionality to conditionally login to the sql database)
-
-
-# ----------------------------------------------------------------------
-# Command-Line Functionality
-# ----------------------------------------------------------------------
-# TODO: Please change these!
-def show_options():
-    """
-    Displays options users can choose in the application, such as
-    viewing <x>, filtering results with a flag (e.g. -s to sort),
-    sending a request to do <x>, etc.
-    """
-    print('What would you like to do? ')
-    print('  (TODO: provide command-line options)')
-    print('  (x) - something nifty to do')
-    print('  (x) - another nifty thing')
-    print('  (x) - yet another nifty thing')
-    print('  (x) - more nifty things!')
-    print('  (q) - quit')
-    print()
-    ans = input('Enter an option: ').lower()
-    if ans == 'q':
-        quit_ui()
-    elif ans == '':
-        pass
-
-
-# Another example of where we allow you to choose to support admin vs. 
-# client features  in the same program, or
-# separate the two as different app_client.py and app_admin.py programs 
-# using the same database.
-def show_admin_options():
-    """
-    Displays options specific for admins, such as adding new data <x>,
-    modifying <x> based on a given id, removing <x>, etc.
-    """
-    print('What would you like to do? ')
-    print('  (p) - Add/Update College Mission')
-    print('  (e) - Update Tuition Costs')
-    print('  (a) - Update Admission Rate')
-    print('  (v) - Update Sports info')
-    print('  (q) - quit')
-    print()
-    ans = input('Enter an option: ').lower()
-    if ans == 'q':
-        quit_ui()
-    elif ans == 'p':
-        update_college_mission()
-    elif ans == 'e':
-        update_tuition_cost()
-    elif ans == 'a':
-        update_admission_rate()
-    elif ans == 'v':
-        update_sports_info()
-
-def update_college_mission():
-    """
-    Update College Mission Statements
-    """
-    pass
-
-def update_tuition_cost():
-    """
-    Update College Mission Statements
-    """
-    pass
+def update_all_info():
+    u_id = input("College u_id: ")
+    ug_pop = input("Undergraduate population: ")
+    hbcu = input("HBCU flag: ")
+    men_only = input("Men only flag: ")
+    women_only = input("Women only flag: ")
+    highest_deg = input("Highest degree offered code: ")
+    admission_rate = input("Admission rate: ")
+    sql = """
+CALL update_all_info('%s', '%s', '%s', '%s', '%s', '%s', '%s')
+""" % (u_id, ug_pop, hbcu, men_only, women_only, highest_deg, admission_rate)
+    try:
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        print("Updated all of the information for your college")
+    except mysql.connector.Error as err:
+        # If you're testing, it's helpful to see more details printed.
+        if DEBUG:
+            sys.stderr(err)
+            sys.exit(1)
+        else:
+            sys.stderr('An SQL error occurred, please retry')
 
 def update_admission_rate():
-    """
-    Update College Mission Statements
-    """
-    pass
+    u_id = input("Please give the u_id of your college: ")
+    while True:
+        ar = input('Please enter a lower bound on the Acceptance Rate (between 0 and 1): ')
+        try:
+            lower_bound = float(ar)
+            break
+        except ValueError:
+            print("Invalid input, please enter a decimal between 0 and 1")
+    sql = """
+UPDATE basic_college_info
+SET admission_rate = '%s'
+WHERE u_id = '%s'
+""" % (ar, u_id)
+    try:
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        print(f"Updated the admission rate for {u_id}")
+    except mysql.connector.Error as err:
+        # If you're testing, it's helpful to see more details printed.
+        if DEBUG:
+            sys.stderr(err)
+            sys.exit(1)
+        else:
+            sys.stderr('An SQL error occurred, please retry')
 
-def update_sports_info():
-    """
-    Update College Mission Statements
-    """
-    pass
 
 def quit_ui():
     """
@@ -197,7 +173,7 @@ def main():
     """
     Main function for starting things up.
     """
-    show_options()
+    show_admin_options()
 
 
 if __name__ == '__main__':

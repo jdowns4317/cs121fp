@@ -9,7 +9,9 @@ INTO TABLE basic_college_info
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(u_id, college_name, ug_pop, city, state_abbr, hbcu, men_only, women_only, 
+highest_degree, admission_rate);
 
 -- cost table data
 LOAD DATA LOCAL INFILE 'processed_data/cost.csv' 

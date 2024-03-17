@@ -9,7 +9,7 @@ JOIN cost c ON b.u_id = c.u_id
 WHERE b.hbcu = 0
 GROUP BY b.state_abbr;
 
--- RA 2 query!
+-- RA 2 query
 -- Finds colleges located in cities with populations greater than 100,000.
 SELECT b.college_name, b.city, b.state_abbr, cp.population
 FROM basic_college_info b
@@ -20,5 +20,5 @@ WHERE cp.population > 100000;
 -- Retrieves colleges that offer both football and basketball programs.
 SELECT DISTINCT b.u_id, b.college_name
 FROM basic_college_info b
-JOIN sports_programs sp1 ON b.u_id = sp1.u_id AND sp1.sport = 'FB'
-JOIN sports_programs sp2 ON b.u_id = sp2.u_id AND sp2.sport = 'BB';
+JOIN sports_programs sp1 ON b.u_id = sp1.u_id AND sp1.sport = 'MFB'
+JOIN sports_programs sp2 ON b.u_id = sp2.u_id AND sp2.sport = 'MBB';

@@ -16,3 +16,11 @@ FROM sports_programs sp
 JOIN basic_college_info bci ON sp.u_id = bci.u_id
 JOIN sports_grad_rate sgr ON sp.sport = sgr.sport
 WHERE bci.college_name = 'California Institute of Technology';
+
+UPDATE basic_college_info
+SET mission = 'try'
+WHERE u_id = 110413;
+
+UPDATE basic_college_info
+SET admission_rate = 0.5
+WHERE u_id = 110413;

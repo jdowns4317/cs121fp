@@ -6,15 +6,7 @@ tkristuf@caltech.edu, jdowns@caltech.edu
 -- their desired criteria. Colleges will also be able to interact with the
 -- database to keep their information updated.
 
-******************************************************************************
-This is a template you may start with for your Final Project application.
-You may choose to modify it, or you may start with the example function
-stubs (most of which are incomplete).
-
-Some sections are provided as recommended program breakdowns, but are optional
-to keep, and you will probably want to extend them based on your application's
-features.
-
+This file specified the client user interface.
 """
 import sys  # to print error messages to sys.stderr
 import mysql.connector
@@ -24,7 +16,7 @@ import mysql.connector.errorcode as errorcode
 
 # Debugging flag to print errors when debugging that shouldn't be visible
 # to an actual client. ***Set to False when done testing.***
-DEBUG = True
+DEBUG = False
 
 
 sport_dict = {'MFB': "Men's Football", "MBB": "Men's Basketball", 
@@ -42,11 +34,11 @@ def get_conn():
     try:
         conn = mysql.connector.connect(
           host='localhost',
-          user='eduadmin',
+          user='educlient',
           # Find port in MAMP or MySQL Workbench GUI or with
           # SHOW VARIABLES WHERE variable_name LIKE 'port';
           port='3306',  # this may change!
-          password='adminpw',
+          password='clientpw',
           database='finaldb' # replace this with your database name
         )
         print('Successfully connected.')
@@ -67,41 +59,6 @@ def get_conn():
             sys.stderr('An error occurred, please contact the administrator.')
         sys.exit(1)
 
-# ----------------------------------------------------------------------
-# Functions for Command-Line Options/Query Execution
-# ----------------------------------------------------------------------
-def example_query():
-    param1 = ''
-    cursor = conn.cursor()
-    # Remember to pass arguments as a tuple like so to prevent SQL
-    # injection.
-    sql = 'SELECT col1 FROM table WHERE col2 = \'%s\';' % (param1, )
-    try:
-        cursor.execute(sql)
-        # row = cursor.fetchone()
-        rows = cursor.fetchall()
-        for row in rows:
-            (col1val) = (row) # tuple unpacking!
-            # do stuff with row data
-    except mysql.connector.Error as err:
-        # If you're testing, it's helpful to see more details printed.
-        if DEBUG:
-            sys.stderr(err)
-            sys.exit(1)
-        else:
-            # TODO: Please actually replace this :) 
-            sys.stderr('An error occurred, give something useful for clients...')
-
-
-
-# ----------------------------------------------------------------------
-# Functions for Logging Users In
-# ----------------------------------------------------------------------
-# Note: There's a distinction between database users (admin and client)
-# and application users (e.g. members registered to a store). You can
-# choose how to implement these depending on whether you have app.py or
-# app-client.py vs. app-admin.py (in which case you don't need to
-# support any prompt functionality to conditionally login to the sql database)
 
 
 # ----------------------------------------------------------------------

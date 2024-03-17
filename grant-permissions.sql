@@ -19,6 +19,7 @@ GRANT ALL PRIVILEGES on *.* TO 'eduadmin'@'localhost';
 
 -- Let the student/parent clients view the education data
 GRANT SELECT ON finaldb.* TO 'educlient'@'localhost';
+GRANT EXECUTE ON finaldb.* TO 'educlient'@'localhost';
 
 -- update the privileges.
 FLUSH PRIVILEGES;
