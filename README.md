@@ -3,13 +3,21 @@ The data for our application comes from the following links: https://collegescor
 Run the commands from the final project spec: 
 
 $ cd our-downloaded-files
+
 $ mysql
+
 mysql> source setup.sql;
+
 mysql> source load-data.sql;
+
 mysql> source setup-passwords.sql;
+
 mysql> source setup-routines.sql;
+
 mysql> source grant-permissions.sql;
-mysql> source queries.sql; -- this is good to confirm no syntax errors
+
+mysql> source queries.sql; 
+
 mysql> quit;
 
 Use the source queries.sql to load data and python3 app-client.py or app-admin.py commands to access the application.
