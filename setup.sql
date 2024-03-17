@@ -108,4 +108,3 @@ CREATE TABLE city_pop (
 );
 
 CREATE INDEX idx_name ON basic_college_info(college_name);
-CREATE INDEX idx_city_state on city_pop(city, state_abbr);
