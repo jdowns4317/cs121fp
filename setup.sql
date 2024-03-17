@@ -6,6 +6,11 @@
 -- their desired criteria. Colleges will also be able to interact with the
 -- database to keep their information updated.
 
+-- setup database:
+DROP DATABASE IF EXISTS finaldb;
+CREATE DATABASE finaldb;
+USE finaldb;
+
 -- clean up old tables
 DROP TABLE IF EXISTS cost;
 DROP TABLE IF EXISTS sports_programs;
