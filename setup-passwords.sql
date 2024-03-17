@@ -1,9 +1,20 @@
--- CS 121 24wi: Password Management (A6 and Final Project)
+-- CS 121 Final Project
+-- James Downs (jdowns@caltech.edu), Thorsen Kristufek (tkristuf@caltech.edu)
+-- Set up the password management system.
+-- Initialize two users: james (client), and thorsen (admin).
 
 -- (Provided) This function generates a specified number of characters for 
 -- using as a
 -- salt in passwords.
 -- [Problem 0]
+
+-- cleanup 
+DROP FUNCTION IF EXISTS make_salt;
+DROP TABLE IF EXISTS user_info;
+DROP PROCEDURE IF EXISTS sp_add_user;
+DROP FUNCTION IF EXISTS authenticate;
+DROP PROCEDURE IF EXISTS sp_change_password;
+
 DELIMITER !
 CREATE FUNCTION make_salt(num_chars INT)
 RETURNS VARCHAR(20) DETERMINISTIC
@@ -43,7 +54,10 @@ CREATE TABLE user_info (
     -- represented as 2 characters.  Thus, 256 / 8 * 2 = 64.
     -- We can use BINARY or CHAR here; BINARY simply has a different
     -- definition for comparison/sorting than CHAR.
-    password_hash BINARY(64) NOT NULL
+    password_hash BINARY(64) NOT NULL,
+
+    -- distinguishes between an admin and a client account
+    is_admin TINYINT DEFAULT 0 NOT NULL
 );
 
 -- [Problem 1a]
@@ -51,12 +65,13 @@ CREATE TABLE user_info (
 -- of 20 characters). Salts the password with a newly-generated salt value,
 -- and then the salt and hash values are both stored in the table.
 DELIMITER !
-CREATE PROCEDURE sp_add_user(new_username VARCHAR(20), password VARCHAR(20))
+CREATE PROCEDURE sp_add_user(new_username VARCHAR(20), password VARCHAR(20), 
+                             is_admin TINYINT)
 BEGIN
   DECLARE salt CHAR(8);
   SET salt = make_salt(8);
   INSERT INTO user_info VALUES(new_username, salt, 
-                              SHA2(CONCAT(password, salt), 256));
+                              SHA2(CONCAT(password, salt), 256), is_admin);
 END !
 DELIMITER ;
 
@@ -94,8 +109,8 @@ END !
 DELIMITER ;
 
 -- [Problem 1c]
-CALL sp_add_user('jdowns', 'jamescs121pwd');
-CALL sp_add_user('jamesd', 'secretpassword!');
+CALL sp_add_user('james', 'collegesRhard9', 0);
+CALL sp_add_user('thorsen', 'SUDOlogin4!', 1);
 
 -- [Problem 1d]
 -- Create a procedure sp_change_password to generate a new salt and change 
